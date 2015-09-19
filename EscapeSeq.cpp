@@ -3,8 +3,8 @@
 
 		Write a program to print the following picture.Take note that you need to use escape sequences to print special characters.
 		
-					  '__'
-					  (oo)
+				  '__'
+				  (oo)
 			  +========\/
 			 / || %%% ||
 			*  ||-----||
