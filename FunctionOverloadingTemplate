@@ -1,0 +1,115 @@
+#include <iostream>
+
+using namespace std;
+
+
+template<class T>
+class complexType
+{
+public:
+    complexType();
+    complexType(T realPart,T imagPart);
+
+    void setComplex(T realPart, T imagPart);
+
+    void getComplex(T& realPart,T& imagPart) const;
+
+    complexType<T> operator +(const complexType<T>& alpha) const;
+
+    complexType<T> operator !() const;
+
+    complexType<T> operator *(const complexType<T>& alpha) const;
+
+    bool operator ==(const complexType<T>& alpha) const;
+
+    friend ostream& operator<<(ostream& out, const complexType<T>& complex) {
+        out << "("; //Step a
+        out << complex.realpart; //Step b
+        out << ", "; //Step c
+        out << complex.imagPart; //Step d
+        out << "i)"; //Step e
+        return out;
+    }
+
+private:
+    T realpart;
+    T imagPart;
+};
+
+
+template<class T>
+complexType<T>::complexType(){
+    //nothing
+}
+
+
+template<class T>
+complexType<T>::complexType(T realPart,T imagPart) {
+    this->realpart = realPart;
+    this->imagPart = imagPart;
+}
+
+
+template<class T>
+void complexType<T>::setComplex(T realPart, T imagPart) {
+    this->realpart = realPart;
+    this->imagPart = imagPart;
+}
+
+template<class T>
+void complexType<T>::getComplex(T& realPart, T& imagPart) const {
+    realpart = this->realpart;
+    imagPart = this->imagPart;
+}
+
+
+template<class T>
+complexType<T> complexType<T>::operator +(const complexType<T>& alpha) const {
+
+    complexType<T> temp;
+    temp.realpart =  this->realpart + alpha.realpart;
+    temp.imagPart = this->imagPart + alpha.imagPart;
+    return temp;
+}
+
+
+template<class T>
+complexType<T> complexType<T>::operator *(const complexType<T>& alpha) const {
+
+    complexType<T> temp;
+    temp.realpart =  (this->realpart * alpha.realpart) - (this->imagPart * alpha.imagPart);
+    temp.imagPart =  (this->realpart * alpha.imagPart) + (this->imagPart * alpha.realpart);
+    return temp;
+}
+
+
+template<class T>
+complexType<T> complexType<T>::operator !() const {
+
+    complexType<T> temp;
+    temp.realpart =  (this->realpart);
+    temp.imagPart =  -1*(this->imagPart);
+    return temp;
+}
+
+
+template<class T>
+bool complexType<T>::operator ==(const complexType<T>& alpha) const {
+    return (this->realpart == alpha.realpart &&
+    this->imagPart == alpha.imagPart);
+}
+
+
+int main(int argc, char *argv[])
+{
+    complexType<int> cm1,cm2(4,5);
+    cm1.setComplex(2,3);
+
+
+    std::cout<<cm1<<cm2<<std::endl;
+    std::cout<<" Add = "<<cm1+cm2<<std::endl;
+    std::cout<<" Multiply = "<<cm1*cm2<<std::endl;
+    std::cout<<" Conjugate = "<<!cm1<<std::endl;
+    
+    return 0;
+}
